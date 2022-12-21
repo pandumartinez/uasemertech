@@ -60,25 +60,33 @@ class _MyHomePageState extends State<MyHomePage> {
               title: new Text("Home"),
               leading: new Icon(Icons.home),
               onTap: () {
-                Navigator.pushNamed(context, 'home');
+                setState(() {
+                  _currentIndex = 0;
+                });
               }),
           ListTile(
               title: new Text("My Creation"),
               leading: new Icon(Icons.emoji_emotions_outlined),
               onTap: () {
-                Navigator.pushNamed(context, 'myCreation');
+                setState(() {
+                  _currentIndex = 1;
+                });
               }),
           ListTile(
               title: new Text("Leaderboard"),
               leading: new Icon(Icons.leaderboard_outlined),
               onTap: () {
-                Navigator.pushNamed(context, 'leaderboard');
+                setState(() {
+                  _currentIndex = 2;
+                });
               }),
           ListTile(
               title: new Text("Settings"),
               leading: new Icon(Icons.settings),
               onTap: () {
-                Navigator.pushNamed(context, 'settings');
+                setState(() {
+                  _currentIndex = 3;
+                });
               }),
         ],
       ),
@@ -98,6 +106,14 @@ class _MyHomePageState extends State<MyHomePage> {
     Leaderboard(),
     Setting()
   ];
+
+  final List<Widget> _navBarPages = [
+    Home(),
+    MyCreation(),
+    Leaderboard(),
+    Setting(),
+  ];
+
   final List<String> _title = [
     "Home",
     "My Creation",
@@ -112,18 +128,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       drawer: myDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
-        ),
-      ),
+      body: _navBarPages[_currentIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
@@ -132,23 +144,19 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         fixedColor: Colors.cyan,
         items: [
-            BottomNavigationBarItem(
-              label: "Home",
-              icon: Icon(Icons.home),
-            ),
-            BottomNavigationBarItem(
-              label: "My Creation",
-              icon: Icon(Icons.emoji_emotions_outlined),
-            ),
-            BottomNavigationBarItem(
-              label: "Leaderboard",
-              icon: Icon(Icons.leaderboard)
-            ),
-            // BottomNavigationBarItem(
-            //   label: "Settings",
-            //   icon: Icon(Icons.settings)
-            // ),
-          ],
+          BottomNavigationBarItem(
+            label: "Home",
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: "My Creation",
+            icon: Icon(Icons.emoji_emotions_outlined),
+          ),
+          BottomNavigationBarItem(
+              label: "Leaderboard", icon: Icon(Icons.leaderboard)),
+          BottomNavigationBarItem(
+              label: "Settings", icon: Icon(Icons.settings)),
+        ],
       ),
     );
   }
