@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dailymemedigest/screen/register.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -67,7 +69,7 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(children: [
           Container(
             width: 180,
@@ -138,7 +140,12 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(20)),
                   child: Card(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Register()));
+                      },
                       child: Text(
                         'Create Account',
                         style: TextStyle(color: Colors.white, fontSize: 25),
@@ -167,4 +174,16 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+}
+
+Future<String> checkUser() async {
+  final prefs = await SharedPreferences.getInstance();
+  String user_id = prefs.getString("user_id") ?? '';
+  return user_id;
+}
+
+void doLogout() async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.remove("user_id");
+  main();
 }

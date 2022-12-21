@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:dailymemedigest/class/account.dart';
 import 'package:dailymemedigest/screen/home.dart';
 import 'package:dailymemedigest/screen/leaderboard.dart';
 import 'package:dailymemedigest/screen/login.dart';
@@ -7,7 +8,17 @@ import 'package:dailymemedigest/screen/myCreation.dart';
 import 'package:dailymemedigest/screen/settings.dart';
 import 'package:flutter/material.dart';
 
+Account userAccount = Account();
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  checkUser().then((String result) {
+    if (result == '')
+      runApp(MyLogin());
+    else {
+      userAccount = Account(result);
+    }
+  });
   runApp(const MyApp());
 }
 
@@ -51,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-              accountName: Text("active_user"),
+              accountName: Text(userAccount.name),
               accountEmail: Text("xyz@gmail.com"),
               currentAccountPicture: CircleAvatar(
                   backgroundImage:
