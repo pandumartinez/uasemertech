@@ -71,7 +71,11 @@ class _LoginState extends State<Login> {
       ),
       body: SingleChildScrollView(
         child: Column(children: [
+          Divider(
+            height: 10,
+          ),
           Container(
+            alignment: Alignment.topCenter,
             width: 180,
             height: 180,
             decoration: BoxDecoration(
@@ -127,49 +131,48 @@ class _LoginState extends State<Login> {
               style: TextStyle(color: Colors.red),
             ),
           Divider(
-            height: 60,
+            height: 20,
           ),
-          Padding(
-              padding: EdgeInsets.all(10),
-              child: Container(
-                  margin: EdgeInsets.all(10),
+          Container(
+              alignment: Alignment.bottomCenter,
+              child: Column(children: [
+                Container(
                   height: 50,
                   width: 250,
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(20)),
-                  child: Card(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Register()));
-                      },
-                      child: Text(
-                        'Create Account',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Register()));
+                    },
+                    child: Text(
+                      'Create Account',
+                      style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
-                  ))),
-          Padding(
-              padding: EdgeInsets.all(10),
-              child: Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: ElevatedButton(
-                  onPressed: () {
-                    doLogin();
-                  },
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
-              )),
+                Divider(
+                  height: 10,
+                ),
+                Container(
+                  height: 50,
+                  width: 250,
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      doLogin();
+                    },
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                  ),
+                ),
+              ]))
         ]),
       ),
     );
