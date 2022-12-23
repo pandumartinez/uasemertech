@@ -62,6 +62,23 @@ class RegisterState extends State<Register> {
           key: _formKey,
           child: Column(
             children: <Widget>[
+              Text(
+                "Daily Meme Digest",
+                style: const TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                "Create Account",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Divider(
+                height: 100,
+              ),
               Padding(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
@@ -119,8 +136,17 @@ class RegisterState extends State<Register> {
                       return null;
                     },
                   )),
+              Divider(
+                height: 100,
+              ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: EdgeInsets.all(10),
+              child: Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(20)),
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState != null &&
@@ -131,9 +157,12 @@ class RegisterState extends State<Register> {
                       submit();
                     }
                   },
-                  child: Text('Create Account'),
+                  child: Text(
+                    'Create Account',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
                 ),
-              ),
+              )),
             ],
           ),
         ));
