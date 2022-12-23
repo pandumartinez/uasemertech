@@ -66,6 +66,7 @@ class RegisterState extends State<Register> {
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
                     decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
                       labelText: 'Username',
                     ),
                     onChanged: (value) {
@@ -84,11 +85,13 @@ class RegisterState extends State<Register> {
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
                     decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
                       labelText: 'Password',
                     ),
                     onChanged: (value) {
                       _password = value;
                     },
+                    obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
@@ -99,7 +102,9 @@ class RegisterState extends State<Register> {
               Padding(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    obscureText: true,
                     decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
                       labelText: 'Confirm Password',
                     ),
                     onChanged: (value) {
