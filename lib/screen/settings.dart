@@ -11,7 +11,6 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-
   void doLogout() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove("user_id");
@@ -38,35 +37,35 @@ class _SettingState extends State<Setting> {
               height: 150.0,
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage:
-                    NetworkImage("https://placekitten.com/150/150"),
+                backgroundImage: NetworkImage(userAccount.url_image),
               ),
             ),
             Center(
               child: Column(children: [
                 Text(
-                  "(Firstname + Lastname)",
+                  userAccount.first_name + userAccount.last_name,
                   style: TextStyle(fontSize: 16),
                 ),
                 Text(
-                  "Active since (month + year)",
+                  "Active since " + userAccount.registration_date,
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
-                  "(email)",
+                  userAccount.username,
                   style: TextStyle(fontSize: 16),
                 ),
               ]),
             ),
-            Divider(height: 20,),
+            Divider(
+              height: 20,
+            ),
             Padding(
               padding: EdgeInsets.all(10),
               child: TextFormField(
                 // onChanged: (value) {
                 //   _user_id = value;
                 // },
-                decoration: InputDecoration(
-                    labelText: 'First Name'),
+                decoration: InputDecoration(labelText: 'First Name'),
               ),
             ),
             Padding(
@@ -76,10 +75,13 @@ class _SettingState extends State<Setting> {
                 //   _user_id = value;s
                 // },
                 decoration: InputDecoration(
-                    labelText: 'Last Name',),
+                  labelText: 'Last Name',
+                ),
               ),
             ),
-            Divider(height: 50,),
+            Divider(
+              height: 50,
+            ),
             Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(

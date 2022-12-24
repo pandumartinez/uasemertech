@@ -1,7 +1,25 @@
 class Account {
   // todo : nambah nama lengkap sama url profile picture
 
-  final String name;
+  String username;
+  String first_name;
+  String last_name;
+  String registration_date;
+  String url_image;
 
-  Account([this.name = ""]);
+  Account(
+      {this.username = "",
+      this.first_name = "",
+      this.last_name = "",
+      this.registration_date = "",
+      this.url_image = "https://placekitten.com/150/150"});
+
+  factory Account.fromJson(Map<String, dynamic> json) {
+    return Account(
+        username: json['username'],
+        first_name: json['first_name'],
+        last_name: json['last_name'] ?? "",
+        registration_date: json['registration_date'],
+        url_image: json['url_image'] ?? "https://placekitten.com/150/150");
+  }
 }

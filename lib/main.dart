@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html';
 
 import 'package:dailymemedigest/class/account.dart';
@@ -8,6 +9,7 @@ import 'package:dailymemedigest/screen/myCreation.dart';
 import 'package:dailymemedigest/screen/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 Account userAccount = Account();
 
@@ -17,10 +19,13 @@ void main() {
     if (result == '')
       runApp(MyLogin());
     else {
-      userAccount = Account(result);
+      print(result);
+      fetchData(result).then((Account user) {
+        userAccount = user;
+        runApp(const MyApp());
+      });
     }
   });
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -69,11 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-              accountName: Text(userAccount.name),
-              accountEmail: Text("xyz@gmail.com"),
+              accountName: Text(userAccount.username),
+              accountEmail:
+                  Text(userAccount.first_name + userAccount.last_name),
               currentAccountPicture: CircleAvatar(
-                  backgroundImage:
-                      NetworkImage("https://placekitten.com/150/150"))),
+                  backgroundImage: NetworkImage(userAccount.url_image))),
           ListTile(
               title: new Text("Home"),
               leading: new Icon(Icons.home),

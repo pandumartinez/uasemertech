@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dailymemedigest/class/account.dart';
 import 'package:dailymemedigest/screen/register.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,9 +49,11 @@ class _LoginState extends State<Login> {
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
+        userAccount = Account.fromJson(json['data']);
+
         final prefs = await SharedPreferences.getInstance();
         prefs.setString("user_id", _user_id);
-        prefs.setString("user_name", json['user_name']);
+        prefs.setString("user_name", userAccount.username);
         main();
       } else {
         setState(() {
@@ -184,4 +187,16 @@ void doLogout() async {
   final prefs = await SharedPreferences.getInstance();
   prefs.remove("user_id");
   main();
+}
+
+Future<Account> fetchData(user_id) async {
+  final response = await http.post(
+      Uri.parse("https://ubaya.fun/flutter/160419137/login.php"),
+      body: {'user_id': user_id});
+  if (response.statusCode == 200) {
+    Map json = jsonDecode(response.body);
+    return Account.fromJson(json['data']);
+  } else {
+    throw Exception('Failed to read API');
+  }
 }
