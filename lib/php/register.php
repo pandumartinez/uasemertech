@@ -2,6 +2,7 @@
 date_default_timezone_set("Asia/Jakarta");
 header("Access-Control-Allow-Origin: *");
 $arr = null;
+#$conn = new mysqli("localhost", "root", "", "flutter_movie");
 $conn = new mysqli("localhost", "flutter_160419096", "ubaya", "flutter_160419096");
 if ($conn->connect_error) {
     $arr = ["result" => "error", "message" => "unable to connect"];
@@ -20,7 +21,7 @@ $stmt->execute();
 if ($stmt->affected_rows > 0) {
     $arr = ["result" => "success", "message" => "account created"];
 } else {
-    $arr = ["result" => "error", "message" => "sql error: $sql"];
+    $arr = ["result" => "error", "message" => "sql error:".$stmt->error];
 }
 echo json_encode($arr);
 $stmt->close();

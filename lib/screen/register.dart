@@ -19,7 +19,7 @@ class RegisterState extends State<Register> {
 
   void submit() async {
     final response = await http.post(
-        Uri.parse("https://ubaya.fun/flutter/160419096/register.php"),
+        Uri.parse("https://ubaya.fun/flutter/160419137/register.php"),
         body: {
           'username': _username,
           'password': _password,
