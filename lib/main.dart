@@ -7,6 +7,7 @@ import 'package:dailymemedigest/screen/login.dart';
 import 'package:dailymemedigest/screen/myCreation.dart';
 import 'package:dailymemedigest/screen/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Account userAccount = Account();
 
@@ -56,6 +57,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  void doLogout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("user_id");
+    main();
+  }
+
   Widget myDrawer() {
     return Drawer(
       elevation: 16.0,
@@ -99,6 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   _currentIndex = 3;
                 });
               }),
+          ListTile(
+              title: new Text("Log Out"),
+              leading: new Icon(Icons.logout),
+              onTap: () {
+                doLogout();
+              }),
         ],
       ),
     );
@@ -140,11 +153,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: myDrawer(),
       body: _navBarPages[_currentIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
