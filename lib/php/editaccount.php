@@ -9,9 +9,9 @@
 
     extract($_POST);
 
-    $sql="UPDATE users set first_name=? , last_name=? where username=?";
+    $sql="UPDATE users set first_name=? , last_name=?, url_image=? where username=?";
     $stmt=$conn->prepare($sql);
-    $stmt->bind_param("sss",$first_name,$last_name,$username);
+    $stmt->bind_param("ssss",$first_name,$last_name,$url_image,$username);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
         $arr=["result"=>"success","id"=>$conn->insert_id];
