@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
           UserAccountsDrawerHeader(
               accountName: Text(userAccount.username),
               accountEmail:
-                  Text(userAccount.first_name + userAccount.last_name),
+                  Text(userAccount.first_name + " " + userAccount.last_name),
               currentAccountPicture: CircleAvatar(
                   backgroundImage: NetworkImage(userAccount.url_image))),
           ListTile(

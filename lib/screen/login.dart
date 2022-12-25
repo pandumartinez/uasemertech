@@ -61,7 +61,8 @@ class _LoginState extends State<Login> {
         });
       }
     } else {
-      throw Exception('Failed to read API');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Login Failed')));
     }
   }
 
