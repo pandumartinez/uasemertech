@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,6 +16,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  File? _image;
   String _newFirstName = "";
   String _newLastName = "";
   TextEditingController _firstNameCont = TextEditingController();
@@ -32,15 +35,39 @@ class _SettingState extends State<Setting> {
           'username': userAccount.username,
           'first_name': _newFirstName,
           'last_name': _newLastName,
+          'url_image': "https://ubaya.fun/flutter/160419137/img/user/" +
+              userAccount.username +
+              ".jpg"
         });
     if (response.statusCode == 200) {
       print(response.body);
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
         if (!mounted) return;
+        if (_image == null) return;
+
+        List<int> imageBytes = _image!.readAsBytesSync();
+        String base64Image = base64Encode(imageBytes);
+        final response2 = await http.post(
+            Uri.parse(
+                'https://ubaya.fun/flutter/160419137/uploadaccountprofile.php'),
+            body: {
+              'username': userAccount.username,
+              'image': base64Image,
+            });
+        if (response2.statusCode == 200) {
+          if (!mounted) return;
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(response2.body)));
+        }
+
         setState(() {
           userAccount.first_name = _newFirstName;
           userAccount.last_name = _newLastName;
+          userAccount.url_image =
+              "https://ubaya.fun/flutter/160419137/img/user/" +
+                  userAccount.username +
+                  ".jpg";
         });
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('User info successfully changed')));
@@ -50,6 +77,66 @@ class _SettingState extends State<Setting> {
           .showSnackBar(SnackBar(content: Text('User info change failed')));
       ;
     }
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              color: Colors.white,
+              child: new Wrap(
+                children: <Widget>[
+                  ListTile(
+                      tileColor: Colors.white,
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Gallery'),
+                      onTap: () {
+                        _imgGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  _imgGallery() async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 30,
+      maxHeight: 256,
+      maxWidth: 256,
+    );
+    if (image == null) return;
+    setState(() {
+      _image = File(image.path);
+    });
+  }
+
+  _imgCamera() async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 30,
+      maxHeight: 256,
+      maxWidth: 256,
+    );
+    if (image == null) return;
+    setState(() {
+      _image = File(image.path);
+    });
   }
 
   @override
@@ -81,7 +168,17 @@ class _SettingState extends State<Setting> {
               height: 150.0,
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage(userAccount.url_image),
+                child: GestureDetector(
+                  onTap: () {
+                    _showPicker(context);
+                  },
+                  child: CircleAvatar(
+                    radius: 50,
+                    child: _image != null
+                        ? Image.file(_image!)
+                        : Image.network(userAccount.url_image),
+                  ),
+                ),
               ),
             ),
             Center(
