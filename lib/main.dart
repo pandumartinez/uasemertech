@@ -6,6 +6,7 @@ import 'package:dailymemedigest/screen/home.dart';
 import 'package:dailymemedigest/screen/leaderboard.dart';
 import 'package:dailymemedigest/screen/login.dart';
 import 'package:dailymemedigest/screen/myCreation.dart';
+import 'package:dailymemedigest/screen/newpost.dart';
 import 'package:dailymemedigest/screen/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -158,11 +159,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: myDrawer(),
       body: _navBarPages[_currentIndex],
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
