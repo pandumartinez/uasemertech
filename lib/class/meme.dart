@@ -1,9 +1,9 @@
 class Meme {
-  final int id;
-  final String url_image;
-  final String top_text;
-  final String bottom_text;
-  final int number_likes;
+  int id;
+  String url_image;
+  String top_text;
+  String bottom_text;
+  int number_likes;
 
   Meme(
       {required this.id,
@@ -14,11 +14,10 @@ class Meme {
 
   factory Meme.fromJson(Map<String, dynamic> json) {
     return Meme(
-      id: json['meme_id'] as int,
-      url_image: json['url_image_meme'] as String,
-      top_text: json['top_text'] as String,
-      bottom_text: json['bottom_text'] as String,
-      number_likes: json['number_likes'] as int
-    );
+        id: json['meme_id'] as int,
+        url_image: json['url_image_meme'] as String,
+        top_text: json['top_text'] as String,
+        bottom_text: json['bottom_text'] as String,
+        number_likes: json['number_likes'] as int);
   }
 }

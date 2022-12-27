@@ -45,7 +45,6 @@ class RegisterState extends State<Register> {
                   ],
                 ));
       } else {
-        throw Exception('Failed to read API');
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('There was an error when connecting to the server')));
       }

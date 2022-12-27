@@ -55,56 +55,88 @@ class _MyCreationState extends State<MyCreation> {
           itemCount: Memes.length,
           itemBuilder: (BuildContext ctxt, int index) {
             return new Card(
-                child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: 400,
-                        width: 400,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(Memes[index].url_image),
-                                fit: BoxFit.cover)),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        height: 400,
-                        width: 400,
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
-                          Memes[index].top_text.toString(),
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                child: Container(
+                    height: 475,
+                    width: 400,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Container(
+                          width: 400,
+                          height: 400,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: 400,
+                                width: 400,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            Memes[index].url_image),
+                                        fit: BoxFit.cover)),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                height: 400,
+                                width: 400,
+                                alignment: Alignment.bottomCenter,
+                                child: Text(
+                                  Memes[index].bottom_text.toString(),
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                height: 400,
+                                width: 400,
+                                alignment: Alignment.topCenter,
+                                child: Text(
+                                  Memes[index].top_text.toString(),
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        height: 400,
-                        width: 400,
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                          Memes[index].bottom_text.toString(),
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        Container(
+                          width: 400,
+                          height: 75,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.thumb_up,
+                                            color: Colors.red,
+                                          ))),
+                                  Text(Memes[index].number_likes.toString() +
+                                      " likes"),
+                                ],
+                              ),
+                              Icon(
+                                Icons.comment,
+                                color: Colors.blue,
+                              ),
+                            ],
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ));
+                        )
+                      ],
+                    )));
           });
     } else {
       return CircularProgressIndicator();

@@ -166,18 +166,15 @@ class _SettingState extends State<Setting> {
             Container(
               alignment: Alignment.center,
               height: 150.0,
-              child: CircleAvatar(
-                radius: 50,
-                child: GestureDetector(
-                  onTap: () {
-                    _showPicker(context);
-                  },
-                  child: CircleAvatar(
-                    radius: 50,
-                    child: _image != null
-                        ? Image.file(_image!)
-                        : Image.network(userAccount.url_image),
-                  ),
+              child: GestureDetector(
+                onTap: () {
+                  _showPicker(context);
+                },
+                child: CircleAvatar(
+                  radius: 50,
+                  child: _image != null
+                      ? Image.file(_image!)
+                      : Image.network(userAccount.url_image),
                 ),
               ),
             ),
