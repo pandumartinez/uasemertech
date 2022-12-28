@@ -121,7 +121,7 @@ class _MyCreationState extends State<MyCreation> {
                                       child: IconButton(
                                           onPressed: () {},
                                           icon: Icon(
-                                            Icons.thumb_up,
+                                            Icons.favorite,
                                             color: Colors.red,
                                           ))),
                                   Text(Memes[index].number_likes.toString() +

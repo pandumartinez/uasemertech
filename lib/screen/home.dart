@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dailymemedigest/screen/comment.dart';
 import 'package:dailymemedigest/screen/newpost.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -97,14 +98,25 @@ class _HomeState extends State<Home> {
                           height: 400,
                           child: Stack(
                             children: [
-                              Container(
-                                height: 400,
-                                width: 400,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            Memes[index].url_image),
-                                        fit: BoxFit.cover)),
+                              GestureDetector(
+                                child: Container(
+                                  height: 400,
+                                  width: 400,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              Memes[index].url_image),
+                                          fit: BoxFit.cover)),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Comment(memeID: Memes[index].id),
+                                    ),
+                                  );
+                                },
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10),
@@ -154,7 +166,7 @@ class _HomeState extends State<Home> {
                                             addLike(Memes[index]);
                                           },
                                           icon: Icon(
-                                            Icons.thumb_up,
+                                            Icons.favorite,
                                             color: Colors.red,
                                           ))),
                                   Text(Memes[index].number_likes.toString() +
