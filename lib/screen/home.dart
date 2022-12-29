@@ -173,10 +173,21 @@ class _HomeState extends State<Home> {
                                       " likes"),
                                 ],
                               ),
-                              Icon(
-                                Icons.comment,
-                                color: Colors.blue,
-                              ),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Comment(memeID: Memes[index].id),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.comment,
+                                  color: Colors.blue,
+                                ),
+                              )
                             ],
                           ),
                         )
