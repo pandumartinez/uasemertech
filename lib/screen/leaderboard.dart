@@ -19,7 +19,7 @@ class _LeaderboardState extends State<Leaderboard> {
 
   Future<String> fetchData() async {
     final response = await http
-        .get(Uri.https("ubaya.fun", '/flutter/160419096/getleaderboard.php'));
+        .get(Uri.https("ubaya.fun", '/flutter/160419137/getleaderboard.php'));
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -59,6 +59,13 @@ class _LeaderboardState extends State<Leaderboard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          Leaderboards[index].url_image.toString()),
+                    ),
+                  ),
                   Text(Leaderboards[index].firstname.toString() +
                       " " +
                       Leaderboards[index].lastname.toString()),

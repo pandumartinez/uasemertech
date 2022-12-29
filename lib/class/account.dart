@@ -12,7 +12,8 @@ class Account {
       this.first_name = "",
       this.last_name = "",
       this.registration_date = "",
-      this.url_image = "https://placekitten.com/150/150"});
+      this.url_image =
+          "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"});
 
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
@@ -20,6 +21,7 @@ class Account {
         first_name: json['first_name'],
         last_name: json['last_name'] ?? "",
         registration_date: json['registration_date'],
-        url_image: json['url_image'] ?? "https://placekitten.com/150/150");
+        url_image: json['url_image'] ??
+            "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
   }
 }
