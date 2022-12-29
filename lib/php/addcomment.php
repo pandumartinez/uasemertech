@@ -25,10 +25,11 @@ if ($result->num_rows > 0) {
 }
 $date = date("Y-m-d");
 
-$sql = "INSERT INTO meme_comments (user_id, meme_id, comment_content, comment_date) VALUES (?,?,?,?)";
+$sql = "INSERT INTO meme_comments (user_id, meme_id, comment_content, comment_date, number_likes) VALUES (?,?,?,?,?)";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iiss", $creator_id, $meme_id, $comment, $date);
+$number_likes = 0;
+$stmt->bind_param("iissi", $creator_id, $meme_id, $comment, $date, $number_likes);
 $stmt->execute();
 if ($stmt->affected_rows > 0) {
     $arr = ["result" => "success", "message" => "comment added"];

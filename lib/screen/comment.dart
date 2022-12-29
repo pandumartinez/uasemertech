@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dailymemedigest/class/comment.dart';
 import 'package:dailymemedigest/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +21,7 @@ class _CommentState extends State<Comment> {
   final _formKey = GlobalKey<FormState>();
   String _comment = "";
   Meme? post;
+  CommentClass? commentClass;
 
   Future<String> fetchData() async {
     final response = await http.post(
@@ -43,7 +45,7 @@ class _CommentState extends State<Comment> {
 
   void addcomment() async {
     final response = await http.post(
-        Uri.parse("https://ubaya.fun/flutter/160419137/addcomment.php"),
+        Uri.parse("https://ubaya.fun/flutter/160419096/addcomment.php"),
         body: {
           'comment': _comment,
           'meme_id': widget.memeID.toString(),
@@ -67,6 +69,29 @@ class _CommentState extends State<Comment> {
   void initState() {
     super.initState();
     bacaData();
+  }
+
+  void addLike(CommentClass comment) async {
+    final response = await http.post(
+        Uri.parse("https://ubaya.fun/flutter/160419096/addlikecomment.php"),
+        body: {
+          'id': comment.comment_id.toString()
+        });
+
+    if (response.statusCode == 200) {
+      Map json = jsonDecode(response.body);
+      if (json['result'] == 'success') {
+        if (!mounted) return;
+
+        setState(() {
+          comment.number_likes++;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text('There was an error while connecting to the server')));
+      }
+    }
   }
 
   Widget tampilData(Meme? _m) {
@@ -139,7 +164,9 @@ class _CommentState extends State<Comment> {
                               Padding(
                                   padding: EdgeInsets.all(5),
                                   child: IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        
+                                      },
                                       icon: Icon(
                                         Icons.favorite,
                                         color: Colors.red,
@@ -166,13 +193,52 @@ class _CommentState extends State<Comment> {
                         shrinkWrap: true,
                         itemCount: _m.users?.length,
                         itemBuilder: (BuildContext ctxt, int index) {
-                          return ListTile(
-                            title: Text(_m.users?[index]['username']),
-                            subtitle: Text(_m.users?[index]['comment_content']),
+                          return Container(
+                            width: 400,
+                            height: 90,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _m.users![index]['username'],
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  _m.users![index]['comment_content'],
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: IconButton(
+                                                onPressed: () {
+                                                  // addLike(_c[index]);
+                                                },
+                                                icon: Icon(
+                                                  Icons.favorite,
+                                                  color: Colors.red,
+                                                ))),
+                                        Text(_m.users![index]['number_likes']
+                                                .toString() +
+                                            " likes"),
+                                      ],
+                                    ),
+                                    Text(_m.users![index]['comment_date']),
+                                  ],
+                                ),
+                              ],
+                            ),
                           );
                         })),
               ],
-            ))
+            )),
       ],
     );
   }
