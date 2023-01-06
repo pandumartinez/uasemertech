@@ -4,6 +4,7 @@ class Meme {
   String top_text;
   String bottom_text;
   int number_likes;
+  int creator_id;
   final List? users;
 
   Meme(
@@ -12,6 +13,7 @@ class Meme {
       required this.top_text,
       required this.bottom_text,
       required this.number_likes,
+      this.creator_id = 0,
       required this.users});
 
   factory Meme.fromJson(Map<String, dynamic> json) {
@@ -21,6 +23,7 @@ class Meme {
         top_text: json['top_text'] as String,
         bottom_text: json['bottom_text'] as String,
         number_likes: json['number_likes'] as int,
+        creator_id: json['creator_id'],
         users: json['users']);
   }
 }

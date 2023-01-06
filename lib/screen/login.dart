@@ -138,17 +138,17 @@ class _LoginState extends State<Login> {
                 Container(
                   height: 50,
                   width: 250,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: ElevatedButton(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  child: OutlinedButton(
+                    style: ButtonStyle(),
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Register()));
                     },
                     child: Text(
                       'Create Account',
-                      style: TextStyle(color: Colors.white, fontSize: 25),
+                      style: TextStyle(color: Colors.blue, fontSize: 25),
                     ),
                   ),
                 ),

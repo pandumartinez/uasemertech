@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dailymemedigest/main.dart';
+import 'package:dailymemedigest/screen/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +21,7 @@ class _MyCreationState extends State<MyCreation> {
 
   Future<String> fetchData() async {
     final response = await http.post(
-        Uri.parse("https://ubaya.fun/flutter/160419096/mycreation.php"),
+        Uri.parse("https://ubaya.fun/flutter/160419137/mycreation.php"),
         body: {'username': userAccount.username});
     if (response.statusCode == 200) {
       return response.body;
@@ -41,6 +42,29 @@ class _MyCreationState extends State<MyCreation> {
         // _temp = Ms[2].url_image;
       });
     });
+  }
+
+  void addLike(Meme post) async {
+    final response = await http.post(
+        Uri.parse("https://ubaya.fun/flutter/160419137/addlike.php"),
+        body: {
+          'id': post.id.toString(),
+        });
+
+    if (response.statusCode == 200) {
+      Map json = jsonDecode(response.body);
+      if (json['result'] == 'success') {
+        if (!mounted) return;
+
+        setState(() {
+          post.number_likes++;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text('There was an error while connecting to the server')));
+      }
+    }
   }
 
   @override
@@ -66,14 +90,25 @@ class _MyCreationState extends State<MyCreation> {
                           height: 400,
                           child: Stack(
                             children: [
-                              Container(
-                                height: 400,
-                                width: 400,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            Memes[index].url_image),
-                                        fit: BoxFit.cover)),
+                              GestureDetector(
+                                child: Container(
+                                  height: 400,
+                                  width: 400,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              Memes[index].url_image),
+                                          fit: BoxFit.cover)),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Comment(memeID: Memes[index].id),
+                                    ),
+                                  );
+                                },
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10),
@@ -119,7 +154,12 @@ class _MyCreationState extends State<MyCreation> {
                                   Padding(
                                       padding: EdgeInsets.all(5),
                                       child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            if (Memes[index].creator_id !=
+                                                userAccount.id) {
+                                              addLike(Memes[index]);
+                                            }
+                                          },
                                           icon: Icon(
                                             Icons.favorite,
                                             color: Colors.red,
@@ -128,10 +168,20 @@ class _MyCreationState extends State<MyCreation> {
                                       " likes"),
                                 ],
                               ),
-                              Icon(
-                                Icons.comment,
-                                color: Colors.blue,
-                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Comment(memeID: Memes[index].id),
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.comment,
+                                    color: Colors.blue,
+                                  )),
                             ],
                           ),
                         )
@@ -146,17 +196,18 @@ class _MyCreationState extends State<MyCreation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('MyCreation'),
-      ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height,
-            child: DaftarMeme(Ms),
-          )
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('MyCreation'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height,
+                child: DaftarMeme(Ms),
+              )
+            ],
+          ),
+        ));
   }
 }

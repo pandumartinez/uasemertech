@@ -24,12 +24,14 @@ if ($result->num_rows > 0) {
         while ($r2 = mysqli_fetch_assoc($result2)) {
             array_push($users, $r2);
         }
-    }
-    $r["users"] = $users;
+        $r["users"] = $users;
 
-    $arr = ["result" => "success", "data" => $r];
+        $arr = ["result" => "success", "data" => $r];
+    }else{
+        $arr = ["result" => "error", "message" => "sql error: ".$stmt2->error];
+    }
 } else {
-    $arr = ["result" => "error", "message" => "sql error: $sql"];
+    $arr = ["result" => "error", "message" => "sql error: ".$stmt->error];
 }
 echo json_encode($arr);
 $stmt->close();

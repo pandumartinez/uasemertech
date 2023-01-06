@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dailymemedigest/main.dart';
 import 'package:dailymemedigest/screen/comment.dart';
 import 'package:dailymemedigest/screen/newpost.dart';
 import 'package:flutter/material.dart';
@@ -163,7 +164,10 @@ class _HomeState extends State<Home> {
                                       padding: EdgeInsets.all(5),
                                       child: IconButton(
                                           onPressed: () {
-                                            addLike(Memes[index]);
+                                            if (Memes[index].creator_id !=
+                                                userAccount.id) {
+                                              addLike(Memes[index]);
+                                            }
                                           },
                                           icon: Icon(
                                             Icons.favorite,

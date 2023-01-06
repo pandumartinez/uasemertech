@@ -1,6 +1,7 @@
 class Account {
   // todo : nambah nama lengkap sama url profile picture
 
+  int id;
   String username;
   String first_name;
   String last_name;
@@ -8,7 +9,8 @@ class Account {
   String url_image;
 
   Account(
-      {this.username = "",
+      {this.id = 0,
+      this.username = "",
       this.first_name = "",
       this.last_name = "",
       this.registration_date = "",
@@ -17,6 +19,7 @@ class Account {
 
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
+        id: json['user_id'],
         username: json['username'],
         first_name: json['first_name'],
         last_name: json['last_name'] ?? "",

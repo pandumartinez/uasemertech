@@ -74,9 +74,7 @@ class _CommentState extends State<Comment> {
   void addLike(CommentClass comment) async {
     final response = await http.post(
         Uri.parse("https://ubaya.fun/flutter/160419096/addlikecomment.php"),
-        body: {
-          'id': comment.comment_id.toString()
-        });
+        body: {'id': comment.comment_id.toString()});
 
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
@@ -164,9 +162,7 @@ class _CommentState extends State<Comment> {
                               Padding(
                                   padding: EdgeInsets.all(5),
                                   child: IconButton(
-                                      onPressed: () {
-                                        
-                                      },
+                                      onPressed: () {},
                                       icon: Icon(
                                         Icons.favorite,
                                         color: Colors.red,
@@ -219,7 +215,7 @@ class _CommentState extends State<Comment> {
                                             padding: EdgeInsets.all(5),
                                             child: IconButton(
                                                 onPressed: () {
-                                                  // addLike(_c[index]);
+                                                  //addLike(_m);
                                                 },
                                                 icon: Icon(
                                                   Icons.favorite,

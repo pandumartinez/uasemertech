@@ -129,9 +129,9 @@ class _SettingState extends State<Setting> {
     final picker = ImagePicker();
     final image = await picker.pickImage(
       source: ImageSource.camera,
-      imageQuality: 30,
-      maxHeight: 256,
-      maxWidth: 256,
+      imageQuality: 60,
+      maxHeight: 512,
+      maxWidth: 512,
     );
     if (image == null) return;
     setState(() {
@@ -172,9 +172,11 @@ class _SettingState extends State<Setting> {
                 },
                 child: CircleAvatar(
                   radius: 50,
-                  child: _image != null
-                      ? Image.file(_image!)
-                      : Image.network(userAccount.url_image),
+                  backgroundImage: _image != null
+                      ? FileImage(
+                          _image!,
+                        )
+                      : NetworkImage(userAccount.url_image) as ImageProvider,
                 ),
               ),
             ),

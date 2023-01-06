@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 extract($_POST);
 
 $sql = "SELECT * FROM memes INNER JOIN users 
-ON memes.creator_id = users.user_id where username = ?";
+ON memes.creator_id = users.user_id where username = ? ORDER BY meme_id DESC";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();

@@ -75,11 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-              accountName: Text(userAccount.username),
-              accountEmail:
-                  Text(userAccount.first_name + " " + userAccount.last_name),
-              currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(userAccount.url_image))),
+            accountName: Text(userAccount.username),
+            accountEmail:
+                Text(userAccount.first_name + " " + userAccount.last_name),
+            currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(userAccount.url_image)),
+            //decoration:
+          ),
           ListTile(
               title: new Text("Home"),
               leading: new Icon(Icons.home),
