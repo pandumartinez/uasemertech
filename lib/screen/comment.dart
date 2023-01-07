@@ -191,7 +191,7 @@ class _CommentState extends State<Comment> {
                         itemBuilder: (BuildContext ctxt, int index) {
                           return Container(
                             width: 400,
-                            height: 90,
+                            height: 100,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
