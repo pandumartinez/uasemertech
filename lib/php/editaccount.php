@@ -9,9 +9,11 @@
 
     extract($_POST);
 
-    $sql="UPDATE users set first_name=? , last_name=?, url_image=? where username=?";
+    $privacy = (int) $is_private;
+
+    $sql="UPDATE users set first_name=? , last_name=?, url_image=?, is_private=? where username=?";
     $stmt=$conn->prepare($sql);
-    $stmt->bind_param("ssss",$first_name,$last_name,$url_image,$username);
+    $stmt->bind_param("sssis",$first_name,$last_name,$url_image,$privacy, $username);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
         $arr=["result"=>"success","id"=>$conn->insert_id];

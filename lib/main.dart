@@ -76,8 +76,18 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           UserAccountsDrawerHeader(
             accountName: Text(userAccount.username),
-            accountEmail:
-                Text(userAccount.first_name + " " + userAccount.last_name),
+            accountEmail: userAccount.is_private == false
+                ? Text(userAccount.first_name + " " + userAccount.last_name)
+                : Text((userAccount.first_name + " " + userAccount.last_name)
+                    .replaceRange(
+                        2,
+                        (userAccount.first_name + " " + userAccount.last_name)
+                            .length,
+                        "*" *
+                            (userAccount.first_name +
+                                    " " +
+                                    userAccount.last_name)
+                                .length)),
             currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(userAccount.url_image)),
             //decoration:

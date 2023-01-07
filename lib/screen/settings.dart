@@ -17,10 +17,9 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
   File? _image;
-  String _newFirstName = "";
-  String _newLastName = "";
   TextEditingController _firstNameCont = TextEditingController();
   TextEditingController _lastNameCont = TextEditingController();
+  bool? _newIsPrivate = false;
 
   void doLogout() async {
     final prefs = await SharedPreferences.getInstance();
@@ -33,41 +32,43 @@ class _SettingState extends State<Setting> {
         Uri.parse("https://ubaya.fun/flutter/160419137/editaccount.php"),
         body: {
           'username': userAccount.username,
-          'first_name': _newFirstName,
-          'last_name': _newLastName,
+          'first_name': _firstNameCont.text,
+          'last_name': _lastNameCont.text,
           'url_image': "https://ubaya.fun/flutter/160419137/img/user/" +
               userAccount.username +
-              ".jpg"
+              ".jpg",
+          'is_private': (_newIsPrivate == true ? 1 : 0).toString()
         });
     if (response.statusCode == 200) {
       print(response.body);
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
         if (!mounted) return;
-        if (_image == null) return;
-
-        List<int> imageBytes = _image!.readAsBytesSync();
-        String base64Image = base64Encode(imageBytes);
-        final response2 = await http.post(
-            Uri.parse(
-                'https://ubaya.fun/flutter/160419137/uploadaccountprofile.php'),
-            body: {
-              'username': userAccount.username,
-              'image': base64Image,
-            });
-        if (response2.statusCode == 200) {
-          if (!mounted) return;
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(response2.body)));
+        if (_image != null) {
+          List<int> imageBytes = _image!.readAsBytesSync();
+          String base64Image = base64Encode(imageBytes);
+          final response2 = await http.post(
+              Uri.parse(
+                  'https://ubaya.fun/flutter/160419137/uploadaccountprofile.php'),
+              body: {
+                'username': userAccount.username,
+                'image': base64Image,
+              });
+          if (response2.statusCode == 200) {
+            if (!mounted) return;
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(response2.body)));
+          }
         }
 
         setState(() {
-          userAccount.first_name = _newFirstName;
-          userAccount.last_name = _newLastName;
+          userAccount.first_name = _firstNameCont.text;
+          userAccount.last_name = _lastNameCont.text;
           userAccount.url_image =
               "https://ubaya.fun/flutter/160419137/img/user/" +
                   userAccount.username +
                   ".jpg";
+          userAccount.is_private = _newIsPrivate ?? false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('User info successfully changed')));
@@ -145,6 +146,7 @@ class _SettingState extends State<Setting> {
     setState(() {
       _firstNameCont.text = userAccount.first_name;
       _lastNameCont.text = userAccount.last_name;
+      _newIsPrivate = userAccount.is_private;
     });
   }
 
@@ -182,10 +184,26 @@ class _SettingState extends State<Setting> {
             ),
             Center(
               child: Column(children: [
-                Text(
-                  userAccount.first_name + " " + userAccount.last_name,
-                  style: TextStyle(fontSize: 16),
-                ),
+                userAccount.is_private == false
+                    ? Text(
+                        userAccount.first_name + " " + userAccount.last_name,
+                        style: TextStyle(fontSize: 16),
+                      )
+                    : Text(
+                        (userAccount.first_name + " " + userAccount.last_name)
+                            .replaceRange(
+                                2,
+                                (userAccount.first_name +
+                                        " " +
+                                        userAccount.last_name)
+                                    .length,
+                                "*" *
+                                    (userAccount.first_name +
+                                            " " +
+                                            userAccount.last_name)
+                                        .length),
+                        style: TextStyle(fontSize: 16),
+                      ),
                 Text(
                   "Active since " + userAccount.registration_date,
                   style: TextStyle(fontSize: 18),
@@ -203,7 +221,7 @@ class _SettingState extends State<Setting> {
               padding: EdgeInsets.all(10),
               child: TextFormField(
                 onChanged: (value) {
-                  _newFirstName = value;
+                  _firstNameCont.text = value;
                 },
                 controller: _firstNameCont,
                 validator: (value) {
@@ -221,7 +239,7 @@ class _SettingState extends State<Setting> {
               padding: EdgeInsets.all(10),
               child: TextFormField(
                 onChanged: (value) {
-                  _newLastName = value;
+                  _lastNameCont.text = value;
                 },
                 controller: _lastNameCont,
                 decoration: InputDecoration(
@@ -235,6 +253,18 @@ class _SettingState extends State<Setting> {
                   }
                   return null;
                 },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: CheckboxListTile(
+                title: Text("Private account endabled"),
+                value: _newIsPrivate,
+                onChanged: ((value) {
+                  setState(() {
+                    _newIsPrivate = value;
+                  });
+                }),
               ),
             ),
             Divider(

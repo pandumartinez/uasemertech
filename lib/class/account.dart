@@ -7,6 +7,7 @@ class Account {
   String last_name;
   String registration_date;
   String url_image;
+  bool is_private;
 
   Account(
       {this.id = 0,
@@ -15,7 +16,8 @@ class Account {
       this.last_name = "",
       this.registration_date = "",
       this.url_image =
-          "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"});
+          "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+      this.is_private = false});
 
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
@@ -25,6 +27,7 @@ class Account {
         last_name: json['last_name'] ?? "",
         registration_date: json['registration_date'],
         url_image: json['url_image'] ??
-            "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
+            "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+        is_private: json['is_private'] == 0 ? false : true);
   }
 }

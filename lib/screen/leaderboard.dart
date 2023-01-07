@@ -66,9 +66,26 @@ class _LeaderboardState extends State<Leaderboard> {
                           Leaderboards[index].url_image.toString()),
                     ),
                   ),
-                  Text(Leaderboards[index].firstname.toString() +
-                      " " +
-                      Leaderboards[index].lastname.toString()),
+                  Leaderboards[index].isPrivate == false
+                      ? Text(Leaderboards[index].firstname.toString() +
+                          " " +
+                          Leaderboards[index].lastname.toString())
+                      : Text((Leaderboards[index].firstname.toString() +
+                              " " +
+                              Leaderboards[index].lastname.toString())
+                          .replaceRange(
+                              2,
+                              (Leaderboards[index].firstname.toString() +
+                                      " " +
+                                      Leaderboards[index].lastname.toString())
+                                  .length,
+                              "*" *
+                                  (Leaderboards[index].firstname.toString() +
+                                          " " +
+                                          Leaderboards[index]
+                                              .lastname
+                                              .toString())
+                                      .length)),
                   Row(
                     children: [
                       Padding(
