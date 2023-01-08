@@ -57,6 +57,9 @@ class _CommentState extends State<Comment> {
       Map json = jsonDecode(response.body);
       if (json['result'] == 'success') {
         if (!mounted) return;
+        setState(() {
+          bacaData();
+        });
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Comment added')));
       } else {
