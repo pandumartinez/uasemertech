@@ -76,7 +76,7 @@ class _LeaderboardState extends State<Leaderboard> {
                               " " +
                               Leaderboards[index].lastname.toString())
                           .replaceRange(
-                              2,
+                              3,
                               (Leaderboards[index].firstname.toString() +
                                       " " +
                                       Leaderboards[index].lastname.toString())

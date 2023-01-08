@@ -255,6 +255,7 @@ class _NewPostState extends State<NewPost> {
                   )),
               Divider(
                 height: 20,
+                color: Colors.transparent,
               ),
               Container(
                 height: 40,

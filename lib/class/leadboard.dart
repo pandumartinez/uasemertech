@@ -12,7 +12,7 @@ class Leadboard {
       this.lastname = "",
       this.url_image =
           "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
-      required this.number_likes,
+      this.number_likes = 0,
       this.isPrivate = false});
 
   factory Leadboard.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class Leadboard {
       lastname: json['last_name'] ?? "",
       url_image: json['url_image'] ??
           "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
-      number_likes: int.parse(json['number_likes']) as int,
+      number_likes: int.parse(json['number_likes'] ?? "0"),
       isPrivate: json['is_private'] == 0 ? false : true,
     );
   }

@@ -213,6 +213,7 @@ class _CommentState extends State<Comment> {
                 ))),
         Divider(
           height: 20,
+          color: Colors.transparent,
         ),
         Card(
             elevation: 10,

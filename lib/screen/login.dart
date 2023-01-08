@@ -76,6 +76,7 @@ class _LoginState extends State<Login> {
         child: Column(children: [
           Divider(
             height: 10,
+            color: Colors.transparent,
           ),
           Container(
             alignment: Alignment.topCenter,
@@ -98,6 +99,7 @@ class _LoginState extends State<Login> {
           ),
           Divider(
             height: 10,
+            color: Colors.transparent,
           ),
           Padding(
             padding: EdgeInsets.all(10),
@@ -131,6 +133,7 @@ class _LoginState extends State<Login> {
             ),
           Divider(
             height: 20,
+            color: Colors.transparent,
           ),
           Container(
               alignment: Alignment.bottomCenter,
@@ -154,6 +157,7 @@ class _LoginState extends State<Login> {
                 ),
                 Divider(
                   height: 10,
+                  color: Colors.transparent,
                 ),
                 Container(
                   height: 50,

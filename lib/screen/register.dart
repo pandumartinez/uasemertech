@@ -64,6 +64,7 @@ class RegisterState extends State<Register> {
                 children: <Widget>[
                   Divider(
                     height: 40,
+                    color: Colors.transparent,
                   ),
                   Container(
                     child: Column(
@@ -78,6 +79,7 @@ class RegisterState extends State<Register> {
                         ),
                         Divider(
                           height: 20,
+                          color: Colors.transparent,
                         ),
                         Text(
                           "Create Account",
@@ -90,6 +92,7 @@ class RegisterState extends State<Register> {
                   ),
                   Divider(
                     height: 40,
+                    color: Colors.transparent,
                   ),
                   Padding(
                       padding: EdgeInsets.all(10),
@@ -147,6 +150,7 @@ class RegisterState extends State<Register> {
                       )),
                   Divider(
                     height: 20,
+                    color: Colors.transparent,
                   ),
                   Container(
                     height: 40,

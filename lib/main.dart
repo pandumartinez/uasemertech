@@ -76,12 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text(userAccount.username),
-            accountEmail: userAccount.is_private == false
+            accountName: userAccount.is_private == false
                 ? Text(userAccount.first_name + " " + userAccount.last_name)
                 : Text((userAccount.first_name + " " + userAccount.last_name)
                     .replaceRange(
-                        2,
+                        3,
                         (userAccount.first_name + " " + userAccount.last_name)
                             .length,
                         "*" *
@@ -89,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     " " +
                                     userAccount.last_name)
                                 .length)),
+            accountEmail: Text("@" + userAccount.username),
             currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(userAccount.url_image)),
             /*decoration: BoxDecoration(

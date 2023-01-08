@@ -198,7 +198,7 @@ class _SettingState extends State<Setting> {
                     : Text(
                         (userAccount.first_name + " " + userAccount.last_name)
                             .replaceRange(
-                                2,
+                                3,
                                 (userAccount.first_name +
                                         " " +
                                         userAccount.last_name)
@@ -214,14 +214,19 @@ class _SettingState extends State<Setting> {
                   "Active since " + userAccount.registration_date,
                   style: TextStyle(fontSize: 18),
                 ),
+                Divider(
+                  height: 5,
+                  color: Colors.transparent,
+                ),
                 Text(
-                  userAccount.username,
-                  style: TextStyle(fontSize: 16),
+                  "@" + userAccount.username,
+                  style: TextStyle(fontSize: 16, color: Colors.black54),
                 ),
               ]),
             ),
             Divider(
               height: 20,
+              color: Colors.transparent,
             ),
             Padding(
               padding: EdgeInsets.all(10),
@@ -275,6 +280,7 @@ class _SettingState extends State<Setting> {
             ),
             Divider(
               height: 50,
+              color: Colors.transparent,
             ),
             Padding(
                 padding: EdgeInsets.all(10),

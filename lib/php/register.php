@@ -12,7 +12,8 @@ extract($_POST);
 
 $lname = null;
 $regis_date = date("Y-m-d");
-$url = null;
+file_put_contents("img/user/".$username.".jpg", file_get_contents("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"));
+$url = "https://ubaya.fun/flutter/160419137/img/user/".$username.".jpg";
 $sql = "INSERT INTO users (username, first_name, last_name, password, registration_date, url_image) VALUES (?,?,?,?,?,?)";
 
 $stmt = $conn->prepare($sql);
