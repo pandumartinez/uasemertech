@@ -15,7 +15,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $r = mysqli_fetch_assoc($result);
     //nanti ditaruh movie genre dsb..
-    $sql2 = "SELECT * FROM users inner join meme_comments on users.user_id=meme_comments.user_id where meme_id=$id ORDER BY comment_date DESC";
+    $sql2 = "SELECT * FROM users inner join meme_comments on users.user_id=meme_comments.user_id where meme_id=$id ORDER BY comment_id DESC";
     $stmt2 = $conn->prepare($sql2);
     $stmt2->execute();
     $users = [];
