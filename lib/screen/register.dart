@@ -112,6 +112,7 @@ class RegisterState extends State<Register> {
                   Padding(
                       padding: EdgeInsets.all(10),
                       child: TextFormField(
+                        obscureText: true,
                         decoration: const InputDecoration(
                           labelText: 'Password',
                         ),
@@ -128,6 +129,7 @@ class RegisterState extends State<Register> {
                   Padding(
                       padding: EdgeInsets.all(10),
                       child: TextFormField(
+                        obscureText: true,
                         decoration: const InputDecoration(
                           labelText: 'Confirm Password',
                         ),

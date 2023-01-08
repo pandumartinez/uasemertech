@@ -79,7 +79,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    bacaData();
+    setState(() {
+      bacaData();
+    });
   }
 
   Widget DaftarMeme(Memes) {
@@ -206,9 +208,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: const Text('Home'),
-      ),
+      ),*/
       body: ListView(
         children: <Widget>[
           Container(

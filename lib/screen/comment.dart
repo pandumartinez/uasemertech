@@ -35,6 +35,7 @@ class _CommentState extends State<Comment> {
   }
 
   bacaData() {
+    post = null;
     fetchData().then((value) {
       setState(() {
         Map json = jsonDecode(value);
@@ -68,13 +69,17 @@ class _CommentState extends State<Comment> {
   @override
   void initState() {
     super.initState();
-    bacaData();
+    setState(() {
+      bacaData();
+    });
   }
 
-  void addLike(CommentClass comment) async {
+  void addLike(Meme _meme) async {
     final response = await http.post(
-        Uri.parse("https://ubaya.fun/flutter/160419096/addlikecomment.php"),
-        body: {'id': comment.comment_id.toString()});
+        Uri.parse("https://ubaya.fun/flutter/160419137/addlike.php"),
+        body: {
+          'id': _meme.id.toString(),
+        });
 
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
@@ -82,13 +87,35 @@ class _CommentState extends State<Comment> {
         if (!mounted) return;
 
         setState(() {
-          comment.number_likes++;
+          _meme.number_likes++;
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content:
                 Text('There was an error while connecting to the server')));
       }
+    }
+  }
+
+  Future<int> addLikeComment(int comment_id, int comment_like) async {
+    final response = await http.post(
+        Uri.parse("https://ubaya.fun/flutter/160419096/addlikecomment.php"),
+        body: {'id': comment_id.toString()});
+
+    if (response.statusCode == 200) {
+      Map json = jsonDecode(response.body);
+      if (json['result'] == 'success') {
+        if (!mounted) return comment_like;
+
+        return comment_like = comment_like + 1;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text('There was an error while connecting to the server')));
+        return comment_like;
+      }
+    } else {
+      return comment_like;
     }
   }
 
@@ -162,7 +189,13 @@ class _CommentState extends State<Comment> {
                               Padding(
                                   padding: EdgeInsets.all(5),
                                   child: IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        if (_m.creator_id != userAccount.id) {
+                                          setState(() {
+                                            addLike(_m);
+                                          });
+                                        }
+                                      },
                                       icon: Icon(
                                         Icons.favorite,
                                         color: Colors.red,
@@ -190,8 +223,9 @@ class _CommentState extends State<Comment> {
                         itemCount: _m.users?.length,
                         itemBuilder: (BuildContext ctxt, int index) {
                           return Container(
+                            padding: EdgeInsets.all(10),
                             width: 400,
-                            height: 100,
+                            height: 110,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -215,7 +249,20 @@ class _CommentState extends State<Comment> {
                                             padding: EdgeInsets.all(5),
                                             child: IconButton(
                                                 onPressed: () {
-                                                  //addLike(_m);
+                                                  setState(() {
+                                                    addLikeComment(
+                                                            _m.users![index]
+                                                                ['comment_id'],
+                                                            _m.users![index][
+                                                                'number_likes'])
+                                                        .then((value) {
+                                                      setState(() {
+                                                        _m.users![index][
+                                                                'number_likes'] =
+                                                            value;
+                                                      });
+                                                    });
+                                                  });
                                                 },
                                                 icon: Icon(
                                                   Icons.favorite,
@@ -282,6 +329,7 @@ class _CommentState extends State<Comment> {
                             } else {
                               setState(() {
                                 addcomment();
+
                                 bacaData();
                               });
                             }

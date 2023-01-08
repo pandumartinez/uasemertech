@@ -17,6 +17,8 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
   File? _image;
+  String _newFirstName = "";
+  String _newLastName = "";
   TextEditingController _firstNameCont = TextEditingController();
   TextEditingController _lastNameCont = TextEditingController();
   bool? _newIsPrivate = false;
@@ -32,8 +34,8 @@ class _SettingState extends State<Setting> {
         Uri.parse("https://ubaya.fun/flutter/160419137/editaccount.php"),
         body: {
           'username': userAccount.username,
-          'first_name': _firstNameCont.text,
-          'last_name': _lastNameCont.text,
+          'first_name': _newFirstName,
+          'last_name': _newLastName,
           'url_image': "https://ubaya.fun/flutter/160419137/img/user/" +
               userAccount.username +
               ".jpg",
@@ -62,6 +64,8 @@ class _SettingState extends State<Setting> {
         }
 
         setState(() {
+          _firstNameCont.text = _newFirstName;
+          _lastNameCont.text = _newLastName;
           userAccount.first_name = _firstNameCont.text;
           userAccount.last_name = _lastNameCont.text;
           userAccount.url_image =
@@ -147,6 +151,8 @@ class _SettingState extends State<Setting> {
       _firstNameCont.text = userAccount.first_name;
       _lastNameCont.text = userAccount.last_name;
       _newIsPrivate = userAccount.is_private;
+      _newFirstName = _firstNameCont.text;
+      _newLastName = _lastNameCont.text;
     });
   }
 
@@ -221,7 +227,7 @@ class _SettingState extends State<Setting> {
               padding: EdgeInsets.all(10),
               child: TextFormField(
                 onChanged: (value) {
-                  _firstNameCont.text = value;
+                  _newFirstName = value;
                 },
                 controller: _firstNameCont,
                 validator: (value) {
@@ -239,7 +245,7 @@ class _SettingState extends State<Setting> {
               padding: EdgeInsets.all(10),
               child: TextFormField(
                 onChanged: (value) {
-                  _lastNameCont.text = value;
+                  _newLastName = value;
                 },
                 controller: _lastNameCont,
                 decoration: InputDecoration(

@@ -44,7 +44,9 @@ class _LeaderboardState extends State<Leaderboard> {
   @override
   void initState() {
     super.initState();
-    bacaData();
+    setState(() {
+      bacaData();
+    });
   }
 
   Widget DaftarLeaderboard(Leaderboards) {
@@ -110,9 +112,9 @@ class _LeaderboardState extends State<Leaderboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text('Leaderboard'),
-      ),
+      ),*/
       body: ListView(
         children: <Widget>[
           Container(

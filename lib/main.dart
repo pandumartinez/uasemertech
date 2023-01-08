@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 //import 'dart:html';
 
 import 'package:dailymemedigest/class/account.dart';
@@ -90,7 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 .length)),
             currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(userAccount.url_image)),
-            //decoration:
+            /*decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(userAccount.url_image),
+                fit: BoxFit.cover
+              )
+            ),*/
           ),
           ListTile(
               title: new Text("Home"),

@@ -70,7 +70,9 @@ class _MyCreationState extends State<MyCreation> {
   @override
   void initState() {
     super.initState();
-    bacaData();
+    setState(() {
+      bacaData();
+    });
   }
 
   Widget DaftarMeme(Memes) {
@@ -196,18 +198,18 @@ class _MyCreationState extends State<MyCreation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           title: Text('MyCreation'),
-        ),
+        ),*/
         body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height,
-                child: DaftarMeme(Ms),
-              )
-            ],
-          ),
-        ));
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height,
+            child: DaftarMeme(Ms),
+          )
+        ],
+      ),
+    ));
   }
 }

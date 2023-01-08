@@ -22,7 +22,7 @@ class Leadboard {
       lastname: json['last_name'] ?? "",
       url_image: json['url_image'] ??
           "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
-      number_likes: json['number_likes'] as int,
+      number_likes: int.parse(json['number_likes']) as int,
       isPrivate: json['is_private'] == 0 ? false : true,
     );
   }
